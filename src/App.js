@@ -8,9 +8,10 @@ function App() {
   let [title, changeTitle] = useState(['자바스크립트','노드js','리액트']); //제목
   let [good, changeGood] = useState([0,0,0]); //좋아요
   let [writeInputVal, changeWriteInputVal] = useState(''); //글발행 input 값
+  let [modaltitle, changeModalTitle] = useState(''); // modal title 변경
 
   // state 변수2 - UI 상태 저장
-  let [modal, changeModal] = useState(false); // 모달창 열고 닫음
+  let [modal, changeModal] = useState(false); // modal 열고 닫음
 
   // 날짜 변수
   let today = new Date();
@@ -25,7 +26,6 @@ function App() {
     newGood[i]++; //2. 좋아요 누를 때마다 1씩 증가
     changeGood(newGood); // 3. changeGood 변경함수에 저장
   }
-  //2. input값 가져오기 
 
   //2. 글 발행 기능
   const publish = (writeInputVal) => {
@@ -44,7 +44,7 @@ function App() {
       { title.map((title, i)=>{
           return (
             <div className="list" key={i}>
-              <h3> {title} <span onClick={()=>{recommend(i)}}>👍</span> {good[i]} </h3>
+              <h3 onClick={()=>{changeModalTitle(title[0])}}> {title} <span onClick={()=>{recommend(i)}}>👍</span> {good[i]} </h3>
               <p>{newToday}</p>
               <hr></hr>
             </div>
@@ -65,7 +65,7 @@ function App() {
 
       {
         modal
-        ?<Modal></Modal>
+        ?<Modal modaltitle={modaltitle}></Modal>
         :null
       }
 
@@ -74,10 +74,10 @@ function App() {
 }
 
 // modal component 생성
-function Modal(){
+function Modal(props){
   return (
     <div className='modal'>
-      <h2>제목</h2>
+      <h2>TITLE : {props.modaltitle}</h2>
       <p>날짜</p>
       <p>상세내용</p>
     </div>
