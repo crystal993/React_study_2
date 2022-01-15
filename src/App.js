@@ -7,7 +7,8 @@ function App() {
   // state 변수1 - 변경할 데이터 저장
   let [title, changeTitle] = useState(['자바스크립트','노드js','리액트']); //제목
   let [good, changeGood] = useState([0,0,0]); //좋아요
-  
+  let [writeInputVal, changeWriteInputVal] = useState(''); //글발행 input 값
+
   // state 변수2 - UI 상태 저장
   let [modal, changeModal] = useState(false); // 모달창 열고 닫음
 
@@ -23,6 +24,14 @@ function App() {
     let newGood = [...good]; // 1. array를 deep copy
     newGood[i]++; //2. 좋아요 누를 때마다 1씩 증가
     changeGood(newGood); // 3. changeGood 변경함수에 저장
+  }
+  //2. input값 가져오기 
+
+  //2. 글 발행 기능
+  const publish = (writeInputVal) => {
+    let newTitle = [...title]; //1.array를 deep copy
+    newTitle.unshift(writeInputVal) //2. 맨 앞에 작성한 글 추가
+    changeTitle(newTitle); // 3. changeTitle 변경함수에 newTitle 전체를 저장
   }
 
   return (
@@ -43,6 +52,12 @@ function App() {
           }
         )
       }
+
+      {/* write - 글 발행 기능 */}
+      <div className='publish'>
+        <input onChange={(e)=>{changeWriteInputVal(e.target.value)}}></input>
+        <button onClick={()=>{publish(writeInputVal)}}>저장</button>
+      </div>
 
       {/* modal */}
       
